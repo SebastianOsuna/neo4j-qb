@@ -1,0 +1,16 @@
+{
+  "name": "neo4j-qb",
+  "version": "1.0.0",
+  "description": "Neo4j Query Builder",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "neo4j",
+    "query",
+    "builder"
+  ],
+  "author": "Sebastian Osuna <jsebastianosuna@hotmail.com>",
+  "license": "MIT"
+}
