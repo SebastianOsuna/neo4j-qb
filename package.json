@@ -12,5 +12,9 @@
     "builder"
   ],
   "author": "Sebastian Osuna <jsebastianosuna@hotmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "debug": "^2.6.0"
+  }
 }
