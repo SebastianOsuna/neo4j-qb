@@ -51,4 +51,11 @@ describe('Where API', function () {
       expect(true);
     }
   });
+
+  it('should accept raw', function () {
+    var cypher = $where(QueryBuilder.raw('p.id = {test}', { test: 1 }));
+
+    expect(cypher.str).toEqual('p.id = {test}');
+    expect(cypher.values.test).toEqual(1);
+  });
 });
