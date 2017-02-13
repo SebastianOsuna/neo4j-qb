@@ -15,6 +15,7 @@ var $insert = require('./lib/insert');
 var $upsert = require('./lib/upsert');
 var $relate = require('./lib/relate');
 var $union = require('./lib/union');
+var $del = require('./lib/delete');
 
 /**
  * @param session Neo4J session or transaction.
@@ -86,6 +87,16 @@ QueryBuilder.prototype.limit = function limit(limit) {
   this.scope.operations.push($limit(limit));
   return this;
 };
+
+/**
+ * The query is immidiately executed using QueryBuilder#exec().
+ *
+ * @return Promise resolving to an array of neo4j-driver#Nodes.
+ */
+QueryBuilder.prototype.del = function del(prop, detach) {
+  this.scope.operations.push($del(prop, detach));
+  return this.exec();
+}
 
 /**
  * Adds a ORDER BY. Defaults to ascending ordering.

@@ -1,6 +1,6 @@
 {
   "name": "neo4j-qb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Neo4j Query Builder",
   "main": "index.js",
   "scripts": {
