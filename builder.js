@@ -38,7 +38,7 @@ QueryBuilder.prototype.reset = function reset() {
  * @return Promise resolving to an array of neo4j-driver#Nodes.
  */
 QueryBuilder.prototype.exec = function exec() {
-  var query = this.toCypher(true);
+  var query = this.toCypher(true).trim();
 
   debug('Running "%s" : %o', query, this.scope.node);
 
@@ -118,8 +118,12 @@ QueryBuilder.prototype.relate = function relate(label, to, from, props) {
 };
 
 /**
+ *  Creates a index on the specified property and label.
  *
  * The query is immidiately executed using QueryBuilder#exec().
+ *
+ * @param property string Property to create the index on
+ * @param label string Label to create the index on
  *
  * @return Promise resolving to an array of neo4j-driver#Nodes.
  */
@@ -129,8 +133,12 @@ QueryBuilder.prototype.indexOn = function indexOn(property, label) {
 };
 
 /**
+ * Drops the index in the specified property and label.
  *
  * The query is immidiately executed using QueryBuilder#exec().
+ *
+ * @param property string Property to drop the index from
+ * @param label string Label to drop the index from
  *
  * @return Promise resolving to an array of neo4j-driver#Nodes.
  */
@@ -140,8 +148,12 @@ QueryBuilder.prototype.dropIndex = function indexOn(property, label) {
 };
 
 /**
+ * Creates a unique constraint on the specified property and label.
  *
  * The query is immidiately executed using QueryBuilder#exec().
+ *
+ * @param property string Property to make unique
+ * @param label string Label to the create the constraint on
  *
  * @return QueryBuilder the current query builder.
  */
@@ -151,8 +163,12 @@ QueryBuilder.prototype.unique = function unique(property, label) {
 };
 
 /**
+ * Drops a unique constraint from the specified property and label.
  *
  * The query is immidiately executed using QueryBuilder#exec().
+ *
+ * @param property string Property to drop the constraint from
+ * @param label string Label to drop the constrain from
  *
  * @return QueryBuilder the current query builder.
  */
@@ -162,8 +178,12 @@ QueryBuilder.prototype.dropUnique = function dropUnique(property, label) {
 };
 
 /**
+ * Creates a new node with the given label and data.
  *
  * The query is immidiately executed using QueryBuilder#exec().
+ *
+ * @param node object Properties for the new node
+ * @param label string Optional: Label for the new node
  *
  * @return QueryBuilder the current query builder.
  */
