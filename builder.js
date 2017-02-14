@@ -16,6 +16,7 @@ var $upsert = require('./lib/upsert');
 var $relate = require('./lib/relate');
 var $union = require('./lib/union');
 var $del = require('./lib/delete');
+var $with = require('./lib/with');
 
 /**
  * @param session Neo4J session or transaction.
@@ -262,6 +263,11 @@ QueryBuilder.prototype.where = function where(prop, op, val) {
  */
 QueryBuilder.prototype.path = function path(handler) {
   this.scope.operations.push($path(handler));
+  return this;
+};
+
+QueryBuilder.prototype.with = function with(properties, aliases) {
+  this.scope.operations.push($with(properties, aliases));
   return this;
 };
 
