@@ -123,8 +123,8 @@ QueryBuilder.prototype.order = function order(property, order) {
  *
  * @return Promise resolving to an array of neo4j-driver#Nodes.
  */
-QueryBuilder.prototype.relate = function relate(label, to, from, props) {
-  this.scope.operations.push($relate(label, to, from, props));
+QueryBuilder.prototype.relate = function relate(label, to, from, props, mods) {
+  this.scope.operations.push($relate(label, to, from, props, mods));
   return this.exec();
 };
 
