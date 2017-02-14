@@ -334,6 +334,7 @@ function transformResponse(result) {
  *
  */
 QueryBuilder.Functions = $returns.Fns;
+QueryBuilder.Modifiers = $relate.Modifiers;
 
 /*
  * Transaction Builder
