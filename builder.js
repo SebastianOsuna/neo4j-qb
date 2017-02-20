@@ -50,7 +50,7 @@ QueryBuilder.prototype.exec = function exec() {
   .then(function (response) {
     // Session is closed on commit
     if (!this.isTransaction) {
-      this.parentSession.close();
+      session.close();
     }
 
     return response;
@@ -58,8 +58,14 @@ QueryBuilder.prototype.exec = function exec() {
   .then(transformResponse)
   .catch(function (err) {
     debug('ERROR %o', err);
+
+    // Session is closed on rollback
+    if (!this.isTransaction) {
+      session.close();
+    }
+
     throw err;
-  });
+  }.bind(this));
   this.reset();
 
   return q;
