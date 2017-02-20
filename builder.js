@@ -39,33 +39,46 @@ QueryBuilder.prototype.reset = function reset() {
  *
  * @param {Promise} resolving to an array of neo4j-driver#Nodes.
  */
-QueryBuilder.prototype.exec = function exec() {
-  var query = this.toCypher(true).trim();
+QueryBuilder.prototype.exec = function exec(q, p) {
+  var query = q || this.toCypher(true).trim();
   var session = this.isTransaction ? this.session : this.driver.session();
+  var parameters = p || this.scope.node;
 
-  debug('Running "%s" : %o', query, this.scope.node);
+  session.$attempts = (session.$attempts || 0) + 1;
+
+  debug('Running "%s" : %o', query, parameters);
 
 
-  var q = session.run(query, this.scope.node)
+  var q = session.run(query, parameters)
   .then(function (response) {
     // Session is closed on commit
     if (!this.isTransaction) {
       session.close();
     }
 
+    session.$attempts = 0;
+
     return response;
   }.bind(this))
   .then(transformResponse)
   .catch(function (err) {
+    if (err.code === 'SessionExpired' && session.$attempts < 4) {
+      session.close();
+      debug('SessionExpired: retrying');
+      return this.exec(query, parameters);
+    }
+
     debug('ERROR %o', err);
 
     // Session is closed on rollback
     if (!this.isTransaction) {
       session.close();
     }
+    session.$attempts = 0;
 
     throw err;
   }.bind(this));
+
   this.reset();
 
   return q;
