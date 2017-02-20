@@ -1,17 +1,16 @@
 var Neo4J = require('neo4j-driver').v1;
 var QueryBuilder = require('./builder');
 
-module.exports = function (host, username, password) {
+module.exports = function (host, username, password, options) {
+
   var credentials = Neo4J.auth.basic(username, password);
-  var driver = Neo4J.driver(host, credentials);
-  var session = driver.session();
+  var driver = Neo4J.driver(host, credentials, options);
 
   process.on('exit', function () {
-    session.close();
     driver.close();
   });
 
-  return new QueryBuilder(session);
+  return new QueryBuilder(driver);
 };
 
 module.exports.QueryBuilder = QueryBuilder;
