@@ -10,6 +10,7 @@ var $index = require('./lib/indexing');
 var $constraints = require('./lib/constraints');
 var $returns = require('./lib/return');
 var $limit = require('./lib/limit');
+var $skip = require('./lib/skip');
 var $order = require('./lib/order');
 var $insert = require('./lib/insert');
 var $upsert = require('./lib/upsert');
@@ -118,6 +119,16 @@ QueryBuilder.prototype.limit = function limit(limit) {
   this.scope.operations.push($limit(limit));
   return this;
 };
+
+/**
+ * Adds a SKIP x
+ *
+ * @param {number} offset Skip this number of records.
+ */
+QueryBuilder.prototype.skip = QueryBuilder.prototype.offset = function skip(offset) {
+  this.scope.operations.push($skip(offset));
+  return this;
+}
 
 /**
  * Executes a DELETE (DETACH) over the current query scope.
