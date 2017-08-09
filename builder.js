@@ -393,6 +393,7 @@ function transformResponse(result) {
  */
 QueryBuilder.Functions = $returns.Fns;
 QueryBuilder.Modifiers = $relate.Modifiers;
+QueryBuilder.Neo4j = require('neo4j-driver').v1;
 
 /*
  * Transaction Builder
